@@ -1,0 +1,43 @@
+> As Migrations controlam a versão do DB e controlam alterações simultâneas do DB
+> Evita que DBs estejam em versões diferentes
+
+> São arquivos (módulos) do NODE
+> Existem duas funções base exportadas: up e down
+> Tudo que é feito no "up", é desfeito no "down"
+> Migration
+    - Sequencia de chamadas para construir um banco de dados
+    - Vai chamando uma sequência de funções "up" e "down"
+> Útil para manter o histórico de log do banco de dados
+
+> Exemplo:
+--------------------------------------
+exports.up = function(knex) {
+
+};
+
+exports.down = function(knex) {
+
+};
+--------------------------------------
+
+
+--- Com o Type ORM ---
+> Para criar cada migration:
+    - yarn typeorm migration:create -n NOME_DA_MIGRATION
+> Para rodar as migrations
+    - yarn typeorm migration:run
+> Só podemos alterar um migration, se ela não foi enviada ainda pra um sistema de controle de versão ou produção
+    - Senão, uma nova migration deve ser criada
+    - Caso esteja só na máquina:
+        -- yarn typeorm migration:revert
+        -- Para confirmar: yarn typeorm migration:show
+
+
+
+--- Com o knex ---
+> Existem duas formas de criar as migrations (tabelas e campos)
+    1. Quando a aplicação rodar e o db.js rodar
+    2. Ou pelo comando:
+        yarn knex migrate:latest
+    Obs.: "yarn knex migrate:rollback" faz com que as migrações sejam desfeitas, ou seja,
+          deleta as tabelas que criamos, não as de controle.

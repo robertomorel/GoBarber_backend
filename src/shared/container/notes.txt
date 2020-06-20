@@ -1,0 +1,14 @@
+Esta pasta será usada para aplicaçao da biblioteca de injeção de dependências.
+
+Objetivo: não ficar passando o repositório como parâmetro no constructor dos services.
+
+Biblioteca: yarn add tsyringe
+
+> Quando usamos a injeção de dependências, este container irá ficar controlando
+e monitorando as dependências
+
+> É usado também o "container.resolve(*Service)"
+    - Carrega o service
+    - Vê no constructor se precisa de alguma dependência
+    - Vai no container e vê se tem a dependência anterior parametrizada lá
+    - Se tiver, retorna uma instância da classe parametrizada

@@ -1,0 +1,49 @@
+Tipos de Provedores de Email
+
+1. Adobe Spark Post
+2. Mailgin
+3. Mailchimp
+4. Amazon SES
+    - Simple Email Service
+    - É necessário ter um domínio próprio
+
+
+Em produção, vamos usar o Amazon SES
+-> Vamos enviar os emails via SMTP
+-> Para envio de muitos emails ao mesmo tempo (batch sending), não é recomendado o SMTP
+    - O SMTP cria uma conexão com o servidor
+    - Envia o email
+    - Fecha a conexão
+
+-> Amazon S3
+    - É um CDN (Content Delivery Network)
+    - Porque vamos usar em ambiente de produção?
+        > Pq quando colocamos nossa aplicação online, os servidores são muito otimizados para performance
+        e com pouco espaço em disco. Geralmente usam SSD.
+        > Ou seja, o espaço para a aplicação é pequeno.
+        > Deste modo, não dá pra ficar salvando imagens ou arquivos no mesmo servidor da aplicação.
+    - Quando colocamos uma aplicação online com o NODEjs
+        > Escala vertical: aplicação tá lenta? Aumenta os recursos.
+        > Escala horizontal: aplicação tá lenta? Criar outros servidores e faz a aplicação rodar em mais de um servidor
+        com balanceamento de carga.
+    - https://aws.amazon.com/pt/console
+
+-> Redis
+    - Ótimo banco para utilizar cache
+    - O cache possibilita armazenar o resultado de uma query ou várias para melhoria de performance.
+    - O Redir não tem "tabelas"; não conseguimos armazenar informações estruturadas
+    - O Redis é uma grande tabela com duas informações, basicamente
+        > CHAVE;VALOR
+    - É como se fosse um cache de resultados
+        > Cada consulta feita é armazenada nesse cache de resultados com key e value
+    - Exemplo:
+        {
+          "appointments-list-PROVIDER-ID-DATA": "value"
+        }
+    - Instalar o "yarn add ioredis"
+
+-> Como evitar ataques Brute Force?
+    - Alguém fazendo 1000 requisições em 1s para tentar descobrir alguma senha, ou fazer o servidor cair
+    - Como protejer o Backend de ataques assim?
+        > Com o rate-limiter-flexible
+    - Instalando o rate-limiter-flexible com "yarn add rate-limiter-flexible"

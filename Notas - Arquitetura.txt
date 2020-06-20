@@ -1,0 +1,67 @@
+> Pastas básicas no projetos:
+--------------
+  src    
+    config
+    database
+    errors
+    middlewares
+    models
+    repositories
+    routes
+    services
+--------------
+
+> Vamos começar a separar por domínios
+    - Metodologia
+        -- Não precisamos aplicar todos os conceitos. Depende muito do projeto.
+    - Domínio: qual a área de conhecimento daquele módulo/arquivo.
+    - Módulos: nova separação dos arquivos
+        -- Usuários
+        -- Agendamentos
+        -- Autenticação
+        ...
+
+> Arquitetura: 
+    - Domain Driven Design - DDD
+        -- Aplica-se apenas no backend
+    - Teste Driven Development - TDD
+        -- Aplica no back e frontend
+        -- Criar testes antes de criar as funcionalidades em si
+
+> Depois da área de conhecimento aplicada (DDD), as pastas do src ficaram assim:
+--------------
+  src 
+    config
+    modules
+    shared
+--------------
+
+> Camada de infra:
+    - Como a aplicação deve se integrar com ferramentas/funcionalidades/pacotes
+        -- DB, Express
+    - Colocamos as decisões técnicas da aplicação
+    
+> Arquitetura:
+    - src/modules
+        -- Setores da aplicação.
+        -- Se um dos setores deixar de existir, os outros setore podem continuar sem problemas
+        -- É responsabilidade desta camada de domínio definir quais métodos esta camada irá ter
+            --- Se usamos typeorm, por exemplo, mas queremos mudar para outra estrutura (ou mudanmos o banco), precisamos ter uma forma de definir um conjunto de regras que o repositório precisa seguir para que faça o fetch com a aplicação. 
+            --- Não pode quebrar facilmente quando queremos mudar a infra. 
+        Obs.: o nosso service não precisa saber onde os dados vão ser persistidos. Devem ser desconectados disso.
+    - src/config
+        -- Configurações gerais
+    - src/shared
+        -- Arquivos compartilhados para mais de um módulo
+    - src/*/infra
+        -- Todas as informações que são responsáveis por um pacote ou lib específicas
+        -- Pasta específica para typeorm/mySQL/...
+        -- Também tudo aquilo que usa express
+            --- Caso eu passe a usar COA, Rap, FastFy, não dará mais certo
+    - src/*/infra/http
+        -- Tudo aquilo que for relacionado com as rotas HTTP
+        -- Exemplo: tudo aquilo que usar express ou outra biblioteca do tipo
+        -- Middlewares, rotas, server
+    - src/*/infra/typeorm
+        -- Tudo aquilo que usa (include) o typeorm    
+        

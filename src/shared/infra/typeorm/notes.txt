@@ -1,0 +1,3 @@
+> Padronização de tipos de conexão por tipo de bando de dados
+
+https://typeorm.io/#/connection-options/common-connection-options
