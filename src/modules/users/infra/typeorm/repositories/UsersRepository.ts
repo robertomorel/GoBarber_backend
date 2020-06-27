@@ -33,11 +33,6 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
-  public async findById(id: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne(id);
-    return user;
-  }
-
   public async findAllProviders({
     except_user_id,
   }: IFindAllProvidersDTO): Promise<User[]> {
@@ -56,16 +51,25 @@ class UsersRepository implements IUsersRepository {
     return users;
   }
 
+  public async findById(id: string): Promise<User | undefined> {
+    const findUser = await this.ormRepository.findOne(id);
+
+    return findUser;
+  }
+
   public async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({
+    const findUser = await this.ormRepository.findOne({
       where: { email },
     });
-    return user;
+
+    return findUser;
   }
 
   public async create(userData: ICreateUserDTO): Promise<User> {
     const user = this.ormRepository.create(userData);
+
     await this.ormRepository.save(user);
+
     return user;
   }
 

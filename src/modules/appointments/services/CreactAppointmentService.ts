@@ -96,6 +96,8 @@ class CreateAppointmentService {
 
     // -- Não podem ser marcados agendamentos fora dos horários permitidos
     if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 17) {
+      console.log(getHours(appointmentDate));
+      console.log('--------- HERE ----------');
       throw new AppError('You can only create appontments between 8am and 5pm');
     }
 
